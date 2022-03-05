@@ -7,9 +7,19 @@ const path = require('path');
 const inquirer = require("inquirer");
 const fs = require("fs")
 
+const OUTPUT_DIR = path.resolve(__dirname, "dist");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
+
+const render = require("./lib/htmlRenderer");
+
 // empty array's we push to after creating a team member
 const teamMembers = [];
 const idArr = [];
+
+// make functions/prompts for Manager, Engineer, and Intern 
+// make sure unique id's and email's if possbile with Regx 
+// make sure to push to teamMembers and idArr arrays after prompts with .then 
+// create a fs 
 
 // start of our functions
 function teamCreate () {
@@ -32,6 +42,8 @@ function teamCreate () {
                         case "Intern":
                             addIntern();
                             break;
+                            default:
+                                buildTeam();
             }
         });
 };
@@ -171,7 +183,7 @@ function addIntern() {
                     if (nameInput !== "") {
                         return true;
                     } else {
-                        console.log("Please enter what school your intern goes to")
+                        console.log("Please enter what school your Intern goes to")
                         return false;
                     }
                 }
@@ -197,4 +209,11 @@ function addIntern() {
         });
 };
 
-teamCreate;
+function buildTeam() {
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+    }
+    fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+};
+
+teamCreate();
