@@ -7,8 +7,8 @@ const path = require('path');
 const inquirer = require("inquirer");
 const fs = require("fs")
 
-const OUTPUT_DIR = path.resolve(__dirname, "dist");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+const DIST_DIR = path.resolve(__dirname, "something");
+const outputPath = path.join(DIST_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
@@ -68,7 +68,14 @@ function addManager() {
                 type: "input",
                 name: "managerId",
                 message: "What is your Manager's ID Number?",
-                // validate with reg expression
+                validate: answer => {
+                    const password = answer.match(
+                        /^[0-9]+$/
+                    );
+                    if (password) {
+                        return true;
+                    } return "Please enter a number in for an ID";
+                }
             },
             { // manager office number
                 type: "input",
@@ -118,6 +125,14 @@ function addEngineer() {
                 name: "engineerId",
                 message: "What is your Engineer's ID Number?",
                 // validate with reg expression
+                validate: answer => {
+                    const password = answer.match(
+                        /^[0-9]+$/
+                    );
+                    if (password) {
+                        return true;
+                    } return "Please enter a number in for an ID";
+                }
             },
             { // Engineer github
                 type: "input",
@@ -174,6 +189,14 @@ function addIntern() {
                 name: "internId",
                 message: "What is your Intern's ID?",
                 //validate with reg expression
+                validate: answer => {
+                    const password = answer.match(
+                        /^[0-9]+$/
+                    );
+                    if (password) {
+                        return true;
+                    } return "Please enter a number in for an ID";
+                }
             },
             {
                 type: "input",
@@ -210,8 +233,8 @@ function addIntern() {
 };
 
 function buildTeam() {
-    if (!fs.existsSync(OUTPUT_DIR)) {
-        fs.mkdirSync(OUTPUT_DIR)
+    if (!fs.existsSync(DIST_DIR)) {
+        fs.mkdirSync(DIST_DIR)
     }
     fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
 };
