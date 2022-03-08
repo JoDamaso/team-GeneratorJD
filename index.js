@@ -5,9 +5,9 @@ const Intern = require('./lib/Intern');
 // modules 
 const path = require('path');
 const inquirer = require("inquirer");
-const fs = require("fs")
+const fs = require("fs");
 
-const DIST_DIR = path.resolve(__dirname, "something");
+const DIST_DIR = path.resolve(__dirname, "dist");
 const outputPath = path.join(DIST_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
