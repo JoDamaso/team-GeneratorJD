@@ -23,3 +23,9 @@ test('office number is valid', () => {
     const tester = new Manager("JD", 1, "test@test.com", testOffice);
     expect(tester.getOfficeNumber()).toBe(testOffice);
 });
+
+test('email is returned', () => {
+    const testEmail = "jd@jd.com";
+    const tester = new Manager("JD", 1, testEmail, 69);
+    expect(tester.getEmail()).toBe(testEmail);
+});
